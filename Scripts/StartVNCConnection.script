@@ -1,0 +1,47 @@
+﻿(* Set the parameters to match the environment*)
+set pathToEpgw to "path to the epgw executable" // Please ensure it ends with / this must be the path to the epgw executable
+set name to "Name of the test in SauceLab"
+set user to "Username"
+set apiKey to "Apikey"
+set datacenter to "eu-central-1" //input your own data center
+set platformName to "iOS" //OS selection
+set deviceName to "iPhone.*" //Device Selection
+
+Log "create the SUT reservation"
+(* Set the shell command in a single line - create the SUT reservation*)
+Shell(!<<[[pathToEpgw]]epgw add sauce-device --name [[name]] --user [[user]] --apiKey [[apiKey]] --dataCenter [[datacenter]] --platformName [[platformName]] --deviceName "[[deviceName]]">>)
+
+put the result into MyRes
+(* Trigger an error if we do not get the expected return of 0 *)
+Assert that MyRes = 0
+
+Log "Create the VNC connection for the Gateway - run it async to not lock the script / output log to the path"
+(* Create the VNC connection for the Gateway *)
+
+Shell(!"nohup [[pathToEpgw]]epgw vnc [[name]] >> [[pathToEpgw]]output.log &")
+
+put the result into MyRes
+Log MyRes
+
+(* Let the Gateway starting give it 5 seconds *)
+wait 5
+
+(* Check the logs for  confirming that the Device is trying to connect*)
+Shell(!"tail -2 [[pathToEpgw]]output.log")
+put the result into MyRes
+Assert that item 2 of MyRes contains "Connecting to your device"
+
+(* Check when the vnc server is started *)
+Log 
+repeat until item 2 of MyRes contains "Listening at port 5900"
+	Shell(!"tail -2 [[pathToEpgw]]output.log")
+	put the result into MyRes
+	Log "waiting for the vnc server to start"
+	wait 5
+	
+	if the repeatindex is greater than 60 // Timeout set to 5min
+		throw "the device took too long. Do not forget to kill the Gateway"
+	end if
+end repeat
+
+Shell(!"rm [[pathToEpgw]]output.log")

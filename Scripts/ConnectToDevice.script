@@ -1,0 +1,7 @@
+﻿try
+	Connect serverID:"localhost", portNum:5900, type:"VNC"
+catch anException
+	//Do processing here to handle the error
+	put anException -- Shows "Bad Problem"
+	put anException.reason -- Shows "Something went wrong"
+end try
