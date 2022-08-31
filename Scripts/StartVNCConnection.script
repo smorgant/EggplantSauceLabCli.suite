@@ -16,7 +16,13 @@ if app is not empty then set appPath to app //Path to the application, if not ne
 Log "create the SUT reservation"
 (* Set the shell command in a single line - create the SUT reservation*)
 
-set cmd to !<<[[pathToEpgw]]epgw add sauce-device --name [[name]] --user [[user]] --apiKey [[apiKey]] --dataCenter [[datacenter]] --platformName [[platformName]] --deviceName "[[deviceName]]">>
+if OSInfo().ProductName contains "Mac" then
+	set cmd to !<<[[pathToEpgw]]epgw add sauce-device --name [[name]] --user [[user]] --apiKey [[apiKey]] --dataCenter [[datacenter]] --platformName [[platformName]] --deviceName "[[deviceName]]">>
+end if //Linux
+
+if OSInfo().ProductName contains "Windows" then
+	set cmd to !<<[[pathToEpgw]]epgw.exe add sauce-device --name [[name]] --user [[user]] --apiKey [[apiKey]] --dataCenter [[datacenter]] --platformName [[platformName]] --deviceName "[[deviceName]]">>
+end if //Windows
 
 if app is not empty then set cmd to cmd && !<<--path "[[appPath]]">>
 

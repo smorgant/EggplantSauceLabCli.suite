@@ -1,4 +1,5 @@
 ﻿Disconnect "TutorialSUT"
+
 try
 	Connect serverID:"localhost", portNum:5900, type:"VNC"
 catch anException
@@ -6,3 +7,7 @@ catch anException
 	put anException -- Shows "Bad Problem"
 	put anException.reason -- Shows "Something went wrong"
 end try
+
+wait 2
+
+CaptureScreen

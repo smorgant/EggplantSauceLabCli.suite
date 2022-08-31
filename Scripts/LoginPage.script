@@ -1,0 +1,19 @@
+﻿to enterUsername username
+	Click Image:"username"
+	TypeText username
+	wait 1
+	CaptureScreen
+end enterUsername
+
+to enterPassword password
+	Click Image:"password"
+	TypeText password
+	wait 1
+	CaptureScreen	
+end enterPassword
+
+to login
+	Click Image:"login"
+	wait 1
+	CaptureScreen
+end login

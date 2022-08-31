@@ -1,16 +1,16 @@
 ﻿{
-    CaptureDate = "2022-08-31 08:41:58 +0000";
+    CaptureDate = "2022-08-31 13:25:20 +0000";
     CaptureHost = "localhost";
     CaptureScreenSize = (
-        562,
-        1218);
+        375,
+        667);
     HasAlpha = 1;
-    HotSpotX = -173;
-    HotSpotY = 12;
+    HotSpotX = -115;
+    HotSpotY = 8;
     LastKnownLocationX = 0;
     LastKnownLocationY = 0;
-    OriginalLocationX = 495;
-    OriginalLocationY = 90;
+    OriginalLocationX = 317;
+    OriginalLocationY = 584;
     Precise = 0;
     Pulsing = 0;
     Scale = 1;

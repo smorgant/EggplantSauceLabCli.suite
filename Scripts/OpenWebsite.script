@@ -3,3 +3,8 @@
 Click "refreshbutton"
 TypeText url
 TypeText returnkey
+
+wait 2
+waitFor 30, "refreshbutton"
+
+CaptureScreen
