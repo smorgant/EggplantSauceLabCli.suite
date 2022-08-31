@@ -1,15 +1,28 @@
-﻿(* Set the parameters to match the environment*)
-set pathToEpgw to "path to the epgw executable" // Please ensure it ends with / this must be the path to the epgw executable
-set name to "Name of the test in SauceLab"
-set user to "Username"
-set apiKey to "Apikey"
-set datacenter to "eu-central-1" //input your own data center
-set platformName to "iOS" //OS selection
-set deviceName to "iPhone.*" //Device Selection
+﻿params platform, device, app
+
+(* load config file please make a copy of the config.example.json to configure your envrionment*)
+put JSONValue (file ResourcePath("config.json")) into config
+
+(* Set the parameters to match the environment*)
+set pathToEpgw to config.path // Please ensure it ends with / this must be the path to the epgw executable
+set name to config.name
+set user to config.user
+set apiKey to config.apiKey
+set datacenter to config.dataCenter //input your own data center
+set platformName to platform //OS selection - iOS
+set deviceName to device //Device Selection - iPhone.*
+if app is not empty then set appPath to app //Path to the application, if not needed please ensure it is left empty
 
 Log "create the SUT reservation"
 (* Set the shell command in a single line - create the SUT reservation*)
-Shell(!<<[[pathToEpgw]]epgw add sauce-device --name [[name]] --user [[user]] --apiKey [[apiKey]] --dataCenter [[datacenter]] --platformName [[platformName]] --deviceName "[[deviceName]]">>)
+
+set cmd to !<<[[pathToEpgw]]epgw add sauce-device --name [[name]] --user [[user]] --apiKey [[apiKey]] --dataCenter [[datacenter]] --platformName [[platformName]] --deviceName "[[deviceName]]">>
+
+if app is not empty then set cmd to cmd && !<<--path "[[appPath]]">>
+
+Log cmd
+
+Shell(cmd)
 
 put the result into MyRes
 (* Trigger an error if we do not get the expected return of 0 *)
@@ -44,4 +57,7 @@ repeat until item 2 of MyRes contains "Listening at port 5900"
 	end if
 end repeat
 
+Log "VNC Server started, the script can be started"
+
 Shell(!"rm [[pathToEpgw]]output.log")
+

@@ -1,0 +1,7 @@
+{
+    "path": "path to the epgw executable",
+    "name": "name of the session",
+    "user": "username",
+    "apiKey": "api key",
+    "dataCenter": "data center"
+}

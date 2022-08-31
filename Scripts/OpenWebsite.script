@@ -1,0 +1,5 @@
+﻿params url
+
+Click "refreshbutton"
+TypeText url
+TypeText returnkey

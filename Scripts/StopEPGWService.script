@@ -1,6 +1,6 @@
-﻿Shell("pkill epgw") //Linux
-Shell("tskill epgw") //windows
-put the result into MyRes
-Assert that MyRes = 0
+﻿if OSInfo().ProductName contains "Mac" then Shell("pkill epgw") //Mac Os
+if OSInfo().ProductName contains "Windows" then Shell("tskill epgw") //Windows
 
+put the result into MyRes
+Log MyRes
 //make change

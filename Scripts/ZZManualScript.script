@@ -1,0 +1,3 @@
+﻿StartVNCConnection "iOS", "iPhone.*"
+ConnectToDevice
+OpenWebsite "http://nopcommerce.testplant.com/banking-app.html"

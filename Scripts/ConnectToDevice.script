@@ -1,4 +1,5 @@
-﻿try
+﻿Disconnect "TutorialSUT"
+try
 	Connect serverID:"localhost", portNum:5900, type:"VNC"
 catch anException
 	//Do processing here to handle the error
